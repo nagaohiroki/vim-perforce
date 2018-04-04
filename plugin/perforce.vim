@@ -7,13 +7,13 @@ endif
 let g:perforce_vim=1
 let s:save_cpo = &cpo
 set cpo&vim
-function! PerforceVimDiff()
-	let file=tempname() . '.' . expand('%:e')
-	call system('p4 print -o ' . file . ' ' . fnameescape(expand('%:p')))
-	execute 'vertical diffsplit ' . file
-endfunction
 function! SafePath()
 	return '"' . fnameescape(expand('%:p')) . '"'
+endfunction
+function! PerforceVimDiff()
+	let file=fnameescape(tempname() . '.' . expand('%:e'))
+	call system('p4 print -o ' . file . ' ' . SafePath())
+	execute 'vertical diffsplit ' . file
 endfunction
 command! P4edit call system('p4 edit ' . SafePath())
 command! P4revert call system('p4 revert -c default ' . SafePath())
