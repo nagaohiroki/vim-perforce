@@ -7,17 +7,11 @@ set cpo&vim
 function! s:safe_path()
 	return '"' . fnameescape(expand('%:p')) . '"'
 endfunction
-function! P4_vim_diff()
-	let file = fnameescape(tempname() . '.' . expand('%:e'))
-	call system('p4 print -o ' . file . ' ' . s:safe_path())
-	execute 'vertical diffsplit ' . file
-endfunction
 command! P4edit call system('p4 edit ' . s:safe_path())
 command! P4revert call system('p4 revert ' . s:safe_path())
 command! P4add call system('p4 add ' . s:safe_path())
 command! P4cleanup call system('p4 revert -a -c default') | echo system('p4 opened')
 command! P4filelog echo iconv(system('p4 filelog -L ' . s:safe_path()), 'cp932', &encoding)
-command! P4diff call P4_vim_diff()
 if has('win32')
 	command! P4v execute '!start p4v -s ' . s:safe_path()
 	command! P4vHistory execute '!start p4v -t history -s ' . s:safe_path()
