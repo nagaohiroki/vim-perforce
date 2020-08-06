@@ -10,6 +10,7 @@ endfunction
 command! P4edit call system('p4 edit ' . s:safe_path())
 command! P4revert call system('p4 revert ' . s:safe_path())
 command! P4add call system('p4 add ' . s:safe_path())
+command! P4delete call system('p4 delete ' . s:safe_path())
 command! P4cleanup call system('p4 revert -a -c default') | echo system('p4 opened')
 command! P4filelog echo iconv(system('p4 filelog -L ' . s:safe_path()), 'cp932', &encoding)
 if has('win32')
